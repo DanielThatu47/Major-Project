@@ -1,0 +1,7 @@
+Flask
+pandas
+yfinance
+xgboost
+scikit-learn
+joblib
+flask-cors
