@@ -1,4 +1,4 @@
-# Welcome to  project
+# Welcome to StockBuddy project
 
 ## Project info
 
