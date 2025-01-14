@@ -61,9 +61,10 @@ cd Backend
 npm i
 
 # Step 3: Set up environment variables (create a .env file and add necessary variables).
+Follow below given steps for environment variables setup for the backend directory
 
 # Step 4: Start the backend server.
-npm srun dev
+npm run dev
 ```
 
 ###  create a .env file in your Backend folder and include following
