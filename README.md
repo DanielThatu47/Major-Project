@@ -52,7 +52,7 @@ REACT_APP_PREDICTIONS_API_URL=http://localhost:5000
 
 ```
 
-# 2. Backend Setup (Node.js & Express.js)
+# 2. Backend Setup (Node.js , MongoDB & Express.js)
 ```sh
 # Step 1: Navigate to the backend directory.
 cd Backend
@@ -63,7 +63,7 @@ npm i
 # Step 3: Set up environment variables (create a .env file and add necessary variables).
 
 # Step 4: Start the backend server.
-npm start
+npm srun dev
 ```
 
 ###  create a .env file in your Backend folder and include following
