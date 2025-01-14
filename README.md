@@ -1,3 +1,4 @@
+```markdown
 # Welcome to StockBuddy project
 
 ## Project info
@@ -32,8 +33,37 @@ npm i
 
 # Step 5: Start the development server with auto-reloading and an instant preview.
 npm run dev
+```
 
+### Backend Setup (Node.js & Express.js)
+```sh
+# Step 1: Navigate to the backend directory.
+cd Backend
 
+# Step 2: Install the necessary dependencies.
+npm i
+
+# Step 3: Set up environment variables (create a .env file and add necessary variables).
+
+# Step 4: Start the backend server.
+npm start
+```
+
+### Machine Learning Model (Flask)
+```sh
+# Step 1: Navigate to the ML model directory.
+cd Model_Backend
+
+# Step 2: Create a virtual environment and activate it.
+python3 -m venv venv
+source venv/bin/activate
+
+# Step 3: Install the necessary dependencies.
+pip install -r requirements.txt
+
+# Step 4: Run the Flask server.
+flask run
+```
 
 **Edit a file directly in GitHub**
 
@@ -51,11 +81,18 @@ npm run dev
 
 ## What technologies are used for this project?
 
-This project is built with .
+This project is built with:
 
 - Vite
 - React
 - shadcn-ui
 - Tailwind CSS
+- Node.js
+- Express.js
+- MongoDB
+- Flask
 
+Feel free to contribute and enhance the project further. If you encounter any issues or have questions, please open an issue on the repository.
+```
 
+This updated README.md file includes specific commands for setting up and running the frontend, backend, and machine learning model.
