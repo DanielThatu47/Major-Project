@@ -1,5 +1,5 @@
 ```markdown
-# Welcome to StockBuddy project
+## Welcome to StockBuddy project
 
 ## Project info
 
