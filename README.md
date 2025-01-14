@@ -1,8 +1,8 @@
 
 
-### Welcome to StockBuddy project
+# Welcome to StockBuddy project
 
-### Project info
+# Project info
 
 ```markdown
 
