@@ -43,11 +43,11 @@ npm run dev
 ## Set Up environment Variables 
 ### Step 1: create a .env file in your StockMarketPrediction folder and include following
 ```markdown
-TWELVE_DATA_API_KEY=incude your api key here
-VITE_NEWS_API_KEY=incude your api key here
-VITE_ALPHA_VANTAGE_API_KEY=incude your api key here
+TWELVE_DATA_API_KEY=include your api key here
+VITE_NEWS_API_KEY=include your api key here
+VITE_ALPHA_VANTAGE_API_KEY=include your api key here
 VITE_TWELVE_DATA_API_KEY=${TWELVE_DATA_API_KEY}
-REACT_APP_PREDICT_URL=http://localhost:5001
+REACT_APP_PREDICT_URL=http://localhost:5000
 REACT_APP_PREDICTIONS_API_URL=http://localhost:5000
 
 ```
@@ -69,11 +69,11 @@ npm run dev
 
 ###  create a .env file in your Backend folder and include following
 ```markdown
-MONGO_URI=incude your api key here
-JWT_SECRET=incude your json web token
+MONGO_URI=include your api key here
+JWT_SECRET=include your json web token
 PORT=5000
 NODE_ENV=development
-TWELVE_DATA_API_KEY=incude your api key here
+TWELVE_DATA_API_KEY=include your api key here
 
 ```
 
