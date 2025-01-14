@@ -19,7 +19,7 @@ The only requirement is having Node.js & npm installed - [install with nvm](http
 Follow these steps:
 
 
-# Front end Setup (Vite)
+# 1. Front end Setup (Vite)
 ```markdown
 ```sh
 # Step 1: Clone the repository using the project's Git URL.
@@ -52,7 +52,7 @@ REACT_APP_PREDICTIONS_API_URL=http://localhost:5000
 
 ```
 
-### Backend Setup (Node.js & Express.js)
+# 2. Backend Setup (Node.js & Express.js)
 ```sh
 # Step 1: Navigate to the backend directory.
 cd Backend
@@ -76,7 +76,7 @@ TWELVE_DATA_API_KEY=incude your api key here
 
 ```
 
-### Machine Learning Model (Flask)
+# 3. Machine Learning Model (Flask)
 ```sh
 # Step 1: Navigate to the ML model directory.
 cd Model_Backend
