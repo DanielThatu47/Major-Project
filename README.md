@@ -36,6 +36,15 @@ npm i
 
 # Step 5: Start the development server with auto-reloading and an instant preview.
 npm run dev
+
+
+Set Up environment Variables 
+step 1: create a .env file and include following
+
+```sh
+VITE_TWELVE_DATA_API_KEY= your VITE_TWELVE_DATA_API_KEY key
+```
+
 ```
 
 ### Backend Setup (Node.js & Express.js)
