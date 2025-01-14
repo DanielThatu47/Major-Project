@@ -40,12 +40,13 @@ npm run dev
 
 
 
-##Set Up environment Variables 
+## Set Up environment Variables 
 ```markdown
 step 1: create a .env file and include following
 
 
-VITE_TWELVE_DATA_API_KEY= your VITE_TWELVE_DATA_API_KEY key
+```VITE_TWELVE_DATA_API_KEY= your VITE_TWELVE_DATA_API_KEY key```
+
 ```
 
 ### Backend Setup (Node.js & Express.js)
