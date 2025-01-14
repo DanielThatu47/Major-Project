@@ -6,12 +6,6 @@
 
 StockBuddy is a comprehensive and interactive stock market prediction application designed to provide users with a seamless experience. The application integrates a modern frontend built with **Vite, React, ShadCN-UI, and Tailwind CSS**, a robust backend powered by **Node.js with Express and MongoDB**, and a **Flask-based machine learning model** for stock predictions.
 
-# Front end Setup (Vite)
-```markdown
-
-
-StockBuddy is a comprehensive application that integrates a front-end built with Vite, React, shadcn-ui, and Tailwind CSS, a back-end using Node.js with Express and MongoDB for database management, and a machine learning model running on Flask for stock market prediction. These components work together seamlessly to provide a robust and interactive user experience.
-
 ## How can I edit this code?
 
 There are several ways of editing your application.
@@ -24,7 +18,9 @@ The only requirement is having Node.js & npm installed - [install with nvm](http
 
 Follow these steps:
 
-### Frontend Setup (Vite)
+
+# Front end Setup (Vite)
+```markdown
 ```sh
 # Step 1: Clone the repository using the project's Git URL.
 git clone https://github.com/DanielThatu47/Major-Project.git
