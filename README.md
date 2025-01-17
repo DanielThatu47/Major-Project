@@ -47,8 +47,8 @@ TWELVE_DATA_API_KEY=include your api key here
 VITE_NEWS_API_KEY=include your api key here
 VITE_ALPHA_VANTAGE_API_KEY=include your api key here
 VITE_TWELVE_DATA_API_KEY=${TWELVE_DATA_API_KEY}
-REACT_APP_PREDICT_URL=http://localhost:5000
-REACT_APP_PREDICTIONS_API_URL=http://localhost:5000
+REACT_APP_PREDICT_URL=http://localhost:5001
+REACT_APP_PREDICTIONS_API_URL=http://localhost:5001
 
 ```
 
