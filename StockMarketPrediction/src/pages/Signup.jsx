@@ -50,7 +50,7 @@ const Signup = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post('https://major-project-3z1y.onrender.com/api/auth/signup', data);
+      const response = await axios.post('https://stockbuddybackend.vercel.app/api/auth/signup', data);
       if (response.data.success) {
         login(response.data.token);
         setModalState({
