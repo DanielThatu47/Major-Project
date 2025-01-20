@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Github, LogIn, Eye, EyeOff } from 'lucide-react';
@@ -25,9 +24,9 @@ const Login = () => {
   const { toast } = useToast();
   const { login } = useAuth();
   const [modalState, setModalState] = React.useState({ isOpen: false, title: '', message: '', type: 'success' });
-  
   const [showPassword, setShowPassword] = React.useState(false); // State for password visibility
-  
+  const [loading, setLoading] = React.useState(false); // Loading state
+
   const form = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -37,6 +36,7 @@ const Login = () => {
   });
 
   const onSubmit = async (data) => {
+    setLoading(true); // Show loader
     try {
       const response = await axios.post('https://stockbuddybackend.vercel.app/api/auth/login', data);
       if (response.data.success) {
@@ -58,6 +58,8 @@ const Login = () => {
         type: 'error'
       });
       console.error('Login error:', error);
+    } finally {
+      setLoading(false); // Hide loader
     }
   };
 
@@ -76,7 +78,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="container mx-auto flex items-center max-h-screen justify-center  p-4">
+      <div className={`relative container mx-auto flex items-center justify-center p-4 ${loading ? "pointer-events-none" : ""}`}>
         <Card className="w-full max-w-md">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl font-bold text-center">Login</CardTitle>
@@ -106,7 +108,6 @@ const Login = () => {
                 className="w-full"
               >
                 <FontAwesomeIcon icon={faGoogle} className="w-4 h-4 mr-2" />
-               
               </Button>
             </div>
             <div className="relative mb-6">
@@ -176,6 +177,14 @@ const Login = () => {
           </CardFooter>
         </Card>
       </div>
+      
+      {/* Loader with blurred background */}
+      {loading && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-white" />
+        </div>
+      )}
+      
       <CustomModal
         isOpen={modalState.isOpen}
         onClose={() => setModalState(prev => ({ ...prev, isOpen: false }))}
