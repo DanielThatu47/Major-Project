@@ -14,7 +14,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
-import 'ldrs/tailChase'; // Importing l-tail-chase loader styles
+import 'ldrs/tailChase'; // Importing loader styles
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -182,7 +182,7 @@ const Login = () => {
       {/* Loader with blurred background */}
       {loading && (
         <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
-          <l-tail-chase size="40" speed="1.75" color="blue"></l-tail-chase>
+          <l-tail-chase size="40" speed="1.75" color="white"></l-tail-chase>
         </div>
       )}
       
