@@ -94,7 +94,7 @@ export const fetchTimeSeries = async (symbol, interval) => {
 
 
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://stockbuddybackend.vercel.app/api';
 
 export const fetchUser = async (token) => {
   const config = {
