@@ -43,7 +43,7 @@ const ResetPassword = () => {
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/reset-password', {
+      const response = await axios.post('https://stockbuddybackend.vercel.app/api/auth/reset-password', {
         token,
         newPassword: data.password
       });

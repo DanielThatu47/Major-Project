@@ -30,7 +30,7 @@ const ForgotPassword = () => {
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/forgot-password', data);
+      const response = await axios.post('https://stockbuddybackend.vercel.app/api/auth/forgot-password', data);
 
       if (response.data.success) {
         const resetToken = response.data.resetToken;

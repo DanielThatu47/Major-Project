@@ -38,7 +38,7 @@ const Login = () => {
   const onSubmit = async (data) => {
     setLoading(true); // Show loader
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', data);
+      const response = await axios.post('https://stockbuddybackend.vercel.app/api/auth/login', data);
       if (response.data.success) {
         login(response.data.token);
         setModalState({
