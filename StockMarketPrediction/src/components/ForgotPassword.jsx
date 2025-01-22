@@ -30,14 +30,19 @@ const ForgotPassword = () => {
   const onSubmit = async (data) => {
     setLoading(true);
     try {
+      // Sending request to the backend to initiate the reset process
       const response = await axios.post('https://stockbuddybackend.vercel.app/api/auth/forgot-password', data);
 
+      // Check if the response indicates success
       if (response.data.success) {
         const resetToken = response.data.resetToken;
+
+        // Ensure the backend provides the reset token
         if (!resetToken) {
           throw new Error('Reset token not provided by the server.');
         }
 
+        // Send the reset link email via EmailJS
         const emailResponse = await emailjs.send(
           'service_swi2wcg',
           'template_wxhikne',
@@ -48,6 +53,7 @@ const ForgotPassword = () => {
           'h8T4SXdcvyZ6g0pvg'
         );
 
+        // If email sending was successful, navigate to the next page
         if (emailResponse.status === 200) {
           navigate('/password-reset-email-sent');
         } else {
