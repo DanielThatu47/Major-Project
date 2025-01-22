@@ -5,9 +5,17 @@ import mongoose from 'mongoose';
 import protect from '../middleware/auth.js';
 import dotenv from 'dotenv';
 import crypto from 'crypto';
+import bcrypt from 'bcryptjs';
+import cors from 'cors';
 
 dotenv.config();
 const router = express.Router();
+
+// Add CORS middleware specifically for this route
+router.use(cors({
+  origin: ['https://stockbuddysem8.vercel.app', 'http://localhost:3000'],
+  credentials: true
+}));
 
 // @route   POST /api/auth/signup
 // @desc    Register new user
@@ -149,10 +157,17 @@ router.post('/forgot-password', async (req, res) => {
   }
 });
 
-// Verify token and reset password
+// Reset Password Route
 router.post('/reset-password', async (req, res) => {
   try {
     const { token, newPassword } = req.body;
+    
+    if (!token || !newPassword) {
+      return res.status(400).json({
+        success: false,
+        message: 'Token and new password are required.'
+      });
+    }
 
     // Hash token and verify against database
     const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
@@ -169,7 +184,8 @@ router.post('/reset-password', async (req, res) => {
     }
 
     // Hash new password and save
-    user.password = await bcrypt.hash(newPassword, 10);
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword, salt);
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
     await user.save();
@@ -186,7 +202,6 @@ router.post('/reset-password', async (req, res) => {
     });
   }
 });
-
 
 export default router;
 

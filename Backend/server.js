@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-    origin: '*', // Replace with your frontend's actual URL and port
+    origin: ['https://stockbuddysem8.vercel.app', 'http://localhost:3000'],
     credentials: true
 }));
 app.use(express.json());

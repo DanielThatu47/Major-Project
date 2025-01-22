@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff, Lock } from 'lucide-react';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const resetPasswordSchema = z.object({
   password: z.string()
@@ -49,11 +50,20 @@ const ResetPassword = () => {
       });
 
       if (response.data.success) {
+        toast.success('Password reset successful!');
         navigate('/login');
+      } else {
+        throw new Error(response.data.message || 'Failed to reset password');
       }
     } catch (error) {
-      if (error.response?.status === 400) {
+      console.error('Error:', error);
+      if (error.response?.status === 404) {
+        toast.error('Reset password service is unavailable. Please try again later.');
+      } else if (error.response?.status === 400) {
         setTokenExpired(true);
+        toast.error('Password reset link has expired. Please request a new one.');
+      } else {
+        toast.error(error.response?.data?.message || 'Failed to reset password. Please try again.');
       }
     } finally {
       setLoading(false);
