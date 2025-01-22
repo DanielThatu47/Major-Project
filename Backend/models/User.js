@@ -16,13 +16,17 @@ const UserSchema = new mongoose.Schema({
       'Please provide a valid email',
     ],
   },
+  
   password: {
     type: String,
     required: [true, 'Please provide a password'],
     minlength: 6,
     select: false, // Do not return password by default
   },
+  resetPasswordToken: String,
+  resetPasswordExpires: Date
 }, { timestamps: true });
+
 
 // Encrypt password before saving
 UserSchema.pre('save', async function (next) {

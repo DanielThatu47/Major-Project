@@ -38,7 +38,7 @@ const Login = () => {
   const onSubmit = async (data) => {
     setLoading(true); // Show loader
     try {
-      const response = await axios.post('https://stockbuddybackend.vercel.app/api/auth/login', data);
+      const response = await axios.post('http://localhost:5000/api/auth/login', data);
       if (response.data.success) {
         login(response.data.token);
         setModalState({
@@ -49,8 +49,8 @@ const Login = () => {
         });
       }
     } catch (error) {
-      const errorMessage = error.response?.data?.message || 
-                          'Unable to connect to the server. Please try again later.';
+      const errorMessage = error.response?.data?.message ||
+        'Unable to connect to the server. Please try again later.';
       setModalState({
         isOpen: true,
         title: 'Login Failed',
@@ -87,22 +87,22 @@ const Login = () => {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-3 gap-4 mb-6">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 onClick={() => handleSocialLogin('Facebook')}
                 className="w-full"
               >
                 <Facebook className="w-4 h-4 mr-2" />
               </Button>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 onClick={() => handleSocialLogin('Github')}
                 className="w-full"
               >
                 <Github className="w-4 h-4 mr-2" />
               </Button>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 onClick={() => handleSocialLogin('Google')}
                 className="w-full"
               >
@@ -142,12 +142,12 @@ const Login = () => {
                       <FormLabel>Password</FormLabel>
                       <FormControl className="relative">
                         <div className="relative">
-                          <Input 
+                          <Input
                             type={showPassword ? "text" : "password"}
-                            placeholder="Enter your password" 
-                            {...field} 
+                            placeholder="Enter your password"
+                            {...field}
                           />
-                          <span 
+                          <span
                             className="absolute inset-y-0 right-3 flex items-center cursor-pointer"
                             onClick={togglePasswordVisibility}
                           >
@@ -173,17 +173,22 @@ const Login = () => {
                 Sign up
               </Link>
             </div>
+            <div className="text-sm text-center text-gray-500">
+              <Link to="/forgot-password" className="text-blue-500 hover:underline">
+                Forgot Password?
+              </Link>
+            </div>
           </CardFooter>
         </Card>
       </div>
-      
+
       {/* Loader with blurred background */}
       {loading && (
         <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="animate-spin w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full"></div>
         </div>
       )}
-      
+
       <CustomModal
         isOpen={modalState.isOpen}
         onClose={() => setModalState(prev => ({ ...prev, isOpen: false }))}

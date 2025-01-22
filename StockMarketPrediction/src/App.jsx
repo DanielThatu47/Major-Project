@@ -18,7 +18,9 @@ import Contact from "./pages/Contact";
 import ProtectedRoute from "./components/ProtectedRoute";
 import StockPrediction from './pages/StockPrediction';
 import Footer from "./components/Footer";
-
+import ForgotPassword from "./components/ForgotPassword";
+import ResetPassword from "./components/ResetPassword";
+import PasswordResetEmailSent from "./components/PasswordResetEmailSent";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -92,6 +94,9 @@ const App = () => (
                     </ProtectedRoute>
                   } 
                 />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password/:token" element={<ResetPassword />} />
+                <Route path="/password-reset-email-sent" element={<PasswordResetEmailSent />} />
               </Routes>
               
             </main>

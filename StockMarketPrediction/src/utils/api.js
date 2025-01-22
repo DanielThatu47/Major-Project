@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://stockbuddybackend.vercel.app/api'; // Adjust based on your backend configuration
+const API_BASE_URL = 'http://localhost:5000/api'; // Adjust based on your backend configuration
 
 /**
  * Fetches the user's watchlist.
