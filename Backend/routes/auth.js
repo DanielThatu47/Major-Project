@@ -134,14 +134,14 @@ router.post('/forgot-password', async (req, res) => {
     }
 
     // Generate and hash reset token
-    const resetToken = crypto.randomBytes(32).toString('hex');
-    const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
-    const resetTokenExpiry = Date.now() + 15 * 60 * 1000; // 15 minutes
+const resetToken = crypto.randomBytes(32).toString('hex');
+const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+const resetTokenExpiry = Date.now() + 30 * 60 * 1000; // 30 minutes
 
-    // Save hashed token to user
-    user.resetPasswordToken = hashedToken;
-    user.resetPasswordExpires = resetTokenExpiry;
-    await user.save();
+// Save hashed token to user
+user.resetPasswordToken = hashedToken;
+user.resetPasswordExpires = resetTokenExpiry;
+await user.save();
 
     res.json({ 
       success: true, 
