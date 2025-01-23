@@ -45,7 +45,7 @@ const ResetPassword = () => {
 React.useEffect(() => {
   const validateToken = async () => {
     try {
-      await axios.get(`https://stockbuddybackend.vercel.app/api/auth/validate-token/${token}`);
+      await axios.get(`https://stockbuddybackend.vercel.app/api/auth/reset-passowrd/${token}`);
     } catch (error) {
       setTokenExpired(true);
     }
