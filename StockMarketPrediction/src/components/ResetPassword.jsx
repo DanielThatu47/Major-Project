@@ -41,6 +41,18 @@ const ResetPassword = () => {
     },
   });
 
+
+React.useEffect(() => {
+  const validateToken = async () => {
+    try {
+      await axios.get(`https://stockbuddybackend.vercel.app/api/auth/validate-token/${token}`);
+    } catch (error) {
+      setTokenExpired(true);
+    }
+  };
+  validateToken();
+}, [token]);
+
   const onSubmit = async (data) => {
     setLoading(true);
     try {
