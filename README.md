@@ -69,7 +69,7 @@ npm run dev
 
 ###  create a .env file in your Backend folder and include following
 ```markdown
-MONGO_URI=include your api key here
+MONGO_URI=include your mongodb connection string here
 JWT_SECRET=include your json web token
 PORT=5000
 NODE_ENV=development
