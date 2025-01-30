@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Github, Mail, UserPlus, Eye, EyeOff } from 'lucide-react';
@@ -31,12 +30,12 @@ const signupSchema = z.object({
   path: ["confirmPassword"],
 });
 
-
 const Signup = () => {
   const { toast } = useToast();
   const { login } = useAuth();
   const [modalState, setModalState] = React.useState({ isOpen: false, title: '', message: '', type: 'success' });
-  const [showPassword, setShowPassword] = React.useState(false); // State for password visibility
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [loading, setLoading] = React.useState(false); // Loading state
 
   const form = useForm({
     resolver: zodResolver(signupSchema),
@@ -49,6 +48,7 @@ const Signup = () => {
   });
 
   const onSubmit = async (data) => {
+    setLoading(true); // Show loader
     try {
       const response = await axios.post('https://stockbuddybackend.vercel.app/api/auth/signup', data);
       if (response.data.success) {
@@ -74,6 +74,8 @@ const Signup = () => {
         message: error.response?.data?.message || 'Unable to create account',
         type: 'error'
       });
+    } finally {
+      setLoading(false); // Hide loader
     }
   };
 
@@ -87,12 +89,12 @@ const Signup = () => {
   };
 
   const togglePasswordVisibility = () => {
-    setShowPassword((prev) => !prev); // Toggle the showPassword state
+    setShowPassword((prev) => !prev);
   };
 
   return (
     <>
-      <div className="container mx-auto flex items-center justify-center min-h-screen p-4">
+      <div className={`relative container mx-auto flex items-center justify-center p-4 ${loading ? "pointer-events-none overflow-hidden" : ""}`}>
         <Card className="w-full max-w-md">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl font-bold text-center">Create an account</CardTitle>
@@ -102,25 +104,13 @@ const Signup = () => {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-3 gap-4 mb-6">
-              <Button 
-                variant="outline" 
-                onClick={() => handleSocialSignup('Facebook')}
-                className="w-full"
-              >
+              <Button variant="outline" onClick={() => handleSocialSignup('Facebook')} className="w-full">
                 <Facebook className="w-4 h-4 mr-2" />
               </Button>
-              <Button 
-                variant="outline" 
-                onClick={() => handleSocialSignup('Github')}
-                className="w-full"
-              >
+              <Button variant="outline" onClick={() => handleSocialSignup('Github')} className="w-full">
                 <Github className="w-4 h-4 mr-2" />
               </Button>
-              <Button 
-                variant="outline" 
-                onClick={() => handleSocialSignup('Google')}
-                className="w-full"
-              >
+              <Button variant="outline" onClick={() => handleSocialSignup('Google')} className="w-full">
                 <Mail className="w-4 h-4 mr-2" />
               </Button>
             </div>
@@ -136,86 +126,47 @@ const Signup = () => {
             </div>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="John Doe" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input placeholder="example@example.com" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Password</FormLabel>
-                      <FormControl>
-                        <div className="relative">
-                          <Input 
-                            type={showPassword ? 'text' : 'password'} // Toggle input type based on state
-                            placeholder="Create a password" 
-                            {...field} 
-                          />
-                          <button
-                            type="button"
-                            onClick={togglePasswordVisibility}
-                            className="absolute right-2 top-1/2 transform -translate-y-1/2 focus:outline-none"
-                            aria-label={showPassword ? 'Hide password' : 'Show password'}
-                          >
-                            {showPassword ? <EyeOff /> : <Eye />} {/* Show/hide icon */}
-                          </button>
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="confirmPassword"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Confirm Password</FormLabel>
-                      <FormControl>
-                        <div className="relative">
-                          <Input 
-                            type={showPassword ? 'text' : 'password'} // Toggle input type based on state
-                            placeholder="Confirm your password" 
-                            {...field} 
-                          />
-                          <button
-                            type="button"
-                            onClick={togglePasswordVisibility}
-                            className="absolute right-2 top-1/2 transform -translate-y-1/2 focus:outline-none"
-                            aria-label={showPassword ? 'Hide password' : 'Show password'}
-                          >
-                            {showPassword ? <EyeOff /> : <Eye />} {/* Show/hide icon */}
-                          </button>
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <FormField control={form.control} name="name" render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="John Doe" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )} />
+                <FormField control={form.control} name="email" render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="example@example.com" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )} />
+                <FormField control={form.control} name="password" render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl className="relative">
+                      <div className="relative">
+                        <Input type={showPassword ? "text" : "password"} placeholder="Create a password" {...field} />
+                        <span className="absolute inset-y-0 right-3 flex items-center cursor-pointer" onClick={togglePasswordVisibility}>
+                          {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        </span>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )} />
+                <FormField control={form.control} name="confirmPassword" render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Confirm Password</FormLabel>
+                    <FormControl>
+                      <Input type={showPassword ? "text" : "password"} placeholder="Confirm your password" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )} />
                 <Button type="submit" className="w-full">
                   <UserPlus className="w-4 h-4 mr-2" />
                   Sign Up
@@ -223,16 +174,22 @@ const Signup = () => {
               </form>
             </Form>
           </CardContent>
-          <CardFooter className="flex flex-col space-y-4">
-            <div className="text-sm text-center text-gray-500">
-              Already have an account?{' '}
-              <Link to="/login" className="text-blue-500 hover:underline">
-                Login
-              </Link>
-            </div>
+          <CardFooter className="text-center text-sm text-gray-500">
+            Already have an account?{" "}
+            <Link to="/login" className="text-blue-500 hover:underline">
+              Log in
+            </Link>
           </CardFooter>
         </Card>
       </div>
+
+      {/* Loader with blurred background */}
+      {loading && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="animate-spin w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full"></div>
+        </div>
+      )}
+
       <CustomModal
         isOpen={modalState.isOpen}
         onClose={() => setModalState(prev => ({ ...prev, isOpen: false }))}
