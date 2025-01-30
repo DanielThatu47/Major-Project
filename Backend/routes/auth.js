@@ -203,6 +203,32 @@ router.post('/reset-password', async (req, res) => {
   }
 });
 
+
+
+
+router.get('/reset-password/:token', async (req, res) => {
+  try {
+    const { token } = req.params;
+    const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+
+    const user = await User.findOne({
+      resetPasswordToken: hashedToken,
+      resetPasswordExpires: { $gt: Date.now() }
+    });
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid or expired token.'
+      });
+    }
+
+    res.json({ success: true, message: 'Token is valid.' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Error validating token.' });
+  }
+});
+
 export default router;
 
 
