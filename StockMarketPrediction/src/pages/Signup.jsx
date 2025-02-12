@@ -50,7 +50,7 @@ const Signup = () => {
   const onSubmit = async (data) => {
     setLoading(true); // Show loader
     try {
-      const response = await axios.post('https://stockbuddybackend.vercel.app/api/auth/signup', data);
+      const response = await axios.post(import.meta.env.VITE_API_BASE_URL + '/auth/signup', data);
       if (response.data.success) {
         login(response.data.token);
         setModalState({
