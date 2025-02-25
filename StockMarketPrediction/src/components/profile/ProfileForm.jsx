@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Camera, Upload } from "lucide-react";
+import { Camera, Upload, RotateCcw } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -14,13 +14,90 @@ const ProfileForm = ({ profileData, setProfileData }) => {
   const canvasRef = useRef(null);
   const [isCameraOpen, setIsCameraOpen] = useState(false);
   const [stream, setStream] = useState(null);
+  // Set initial facing mode to 'user' for selfie camera
+  const [facingMode, setFacingMode] = useState("user");
+
+  // Function to initialize the camera with the current facing mode
+  const initializeCamera = async (mode) => {
+    try {
+      // Stop any previous stream
+      if (stream) {
+        stream.getTracks().forEach((track) => track.stop());
+      }
+      const constraints = { video: { facingMode: mode } };
+      const newStream = await navigator.mediaDevices.getUserMedia(constraints);
+      setStream(newStream);
+      if (videoRef.current) {
+        videoRef.current.srcObject = newStream;
+        await videoRef.current.play();
+      }
+      setIsCameraOpen(true);
+      toast({
+        title: "Camera Ready",
+        description: "Camera stream is active. Use the toggle to switch cameras if needed.",
+      });
+    } catch (err) {
+      toast({
+        title: "Camera Access Denied",
+        description: "Grant permissions in browser settings.",
+        variant: "destructive",
+      });
+      setIsCameraOpen(false);
+    }
+  };
+
+  // Handle camera capture initiation on button click
+  const handleCameraCapture = async () => {
+    // Initialize the camera with current facing mode
+    await initializeCamera(facingMode);
+  };
+
+  // Capture the photo from the video feed
+  const capturePhoto = () => {
+    if (videoRef.current && canvasRef.current) {
+      const context = canvasRef.current.getContext("2d");
+      context.drawImage(
+        videoRef.current,
+        0,
+        0,
+        canvasRef.current.width,
+        canvasRef.current.height
+      );
+      const imageDataUrl = canvasRef.current.toDataURL("image/png");
+      setProfileData((prev) => ({ ...prev, profileImage: imageDataUrl }));
+      stopCamera();
+      toast({
+        title: "Photo Captured",
+        description: "Profile picture updated.",
+      });
+    }
+  };
+
+  // Stop the camera stream
+  const stopCamera = () => {
+    if (stream) {
+      stream.getTracks().forEach((track) => track.stop());
+    }
+    setIsCameraOpen(false);
+  };
+
+  // Toggle between selfie (user) and rear (environment) camera
+  const toggleCamera = async () => {
+    const newFacingMode = facingMode === "user" ? "environment" : "user";
+    setFacingMode(newFacingMode);
+    await initializeCamera(newFacingMode);
+    toast({
+      title: "Camera Toggled",
+      description: `Switched to ${newFacingMode === "user" ? "selfie" : "rear"} camera.`,
+    });
+  };
 
   // Handle profile update
   const handleProfileUpdate = (e) => {
     e.preventDefault();
     toast({
       title: "Profile Updated",
-      description: "Your profile has been successfully updated.",
+      description: "Profile has been successfully updated.",
     });
   };
 
@@ -34,52 +111,6 @@ const ProfileForm = ({ profileData, setProfileData }) => {
       };
       reader.readAsDataURL(file);
     }
-  };
-
-  // Handle camera access and capture
-  const handleCameraCapture = async () => {
-    try {
-      // Check for camera access permission
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      setStream(stream);
-      setIsCameraOpen(true);
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-      }
-      toast({
-        title: "Camera Ready",
-        description: "You can now capture a photo.",
-      });
-    } catch (err) {
-      toast({
-        title: "Camera Access Denied",
-        description: "Please grant camera permissions in your browser settings.",
-        variant: "destructive",
-      });
-    }
-  };
-
-  // Capture the photo from video feed
-  const capturePhoto = () => {
-    if (videoRef.current && canvasRef.current) {
-      const context = canvasRef.current.getContext("2d");
-      context.drawImage(videoRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height);
-      const imageDataUrl = canvasRef.current.toDataURL("image/png");
-      setProfileData((prev) => ({ ...prev, profileImage: imageDataUrl }));
-      stopCamera();
-      toast({
-        title: "Photo Captured",
-        description: "Your new profile picture has been set.",
-      });
-    }
-  };
-
-  // Stop the camera stream
-  const stopCamera = () => {
-    if (stream) {
-      stream.getTracks().forEach((track) => track.stop());
-    }
-    setIsCameraOpen(false);
   };
 
   return (
@@ -119,7 +150,11 @@ const ProfileForm = ({ profileData, setProfileData }) => {
             <canvas ref={canvasRef} width="256" height="192" className="hidden" />
             <div className="flex gap-4">
               <Button variant="primary" onClick={capturePhoto}>Capture Photo</Button>
-              <Button variant="secondary" onClick={stopCamera}>Cancel</Button>
+              <Button variant="secondary" onClick={toggleCamera}>
+                <RotateCcw className="w-4 h-4" />
+                Toggle Camera
+              </Button>
+              <Button variant="destructive" onClick={stopCamera}>Cancel</Button>
             </div>
           </div>
         )}
